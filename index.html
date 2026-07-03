@@ -1,0 +1,151 @@
+HTML
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>긴급 신고 및 위치 확인</title>
+    <style>
+        body {
+            font-family: 'Malgun Gothic', sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f7fa;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 90vh;
+        }
+        .container {
+            width: 100%;
+            max-width: 500px;
+            text-align: center;
+            background: white;
+            padding: 30px 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+        p {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 25px;
+        }
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 20px 0;
+            margin: 15px 0;
+            font-size: 22px;
+            font-weight: bold;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            text-decoration: none;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.1s ease;
+        }
+        .btn:active {
+            transform: scale(0.98);
+        }
+        .btn-112 { background-color: #1976d2; } /* 경찰청 블루 */
+        .btn-119 { background-color: #d32f2f; } /* 소방청 레드 */
+        
+        #location-box {
+            margin-top: 25px;
+            padding: 15px;
+            background-color: #eee;
+            border-radius: 8px;
+            font-size: 14px;
+            color: #444;
+            word-break: break-all;
+        }
+        .loading { color: #ff9800; font-weight: bold; }
+        .success { color: #2e7d32; font-weight: bold; }
+        .error { color: #c62828; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>🚨 긴급 신고 서비스</h1>
+    <p>버튼을 누르면 즉시 전화로 연결됩니다.</p>
+
+    <!-- 112 / 119 전화연결 버튼 -->
+    <a href="tel:112" class="btn btn-112">경찰 신고 (112) 호출</a>
+    <a href="tel:119" class="btn btn-119">소방 신고 (119) 호출</a>
+
+    <!-- 위치 정보 표시 영역 -->
+    <div id="location-box">
+        📍 현위치 확인 중... <br>
+        <span id="status" class="loading">GPS 수신을 요청하고 있습니다.</span>
+        <div id="coordinates"></div>
+    </div>
+</div>
+
+<script>
+    // 페이지가 로드되면 자동으로 위치 추적 시작
+    window.onload = function() {
+        const status = document.getElementById('status');
+        const coordinates = document.getElementById('coordinates');
+
+        if (!navigator.geolocation) {
+            status.textContent = "이 브라우저에서는 위치 추적을 지원하지 않습니다.";
+            status.className = "error";
+            return;
+        }
+
+        // GPS 옵션 설정 (높은 정확도)
+        const options = {
+            enableHighAccuracy: true,
+            timeout: 10000,
+            maximumAge: 0
+        };
+
+        function success(position) {
+            const latitude  = position.coords.latitude;
+            const longitude = position.coords.longitude;
+            const accuracy  = position.coords.accuracy;
+
+            status.textContent = "위치 정보 확인 완료";
+            status.className = "success";
+            
+            // 신고자가 확인하고 상담원에게 불러줄 수 있도록 화면에 표시
+            coordinates.innerHTML = `
+                <br><strong>위도:</strong> ${latitude.toFixed(6)} 
+                <br><strong>경도:</strong> ${longitude.toFixed(6)}
+                <br><span style="font-size:11px; color:#888;">(오차범위: 약 ${Math.round(accuracy)}m)</span>
+                <br><br><span style="color:#d32f2f; font-weight:bold;">※ 신고 시 위 경도 좌표를 함께 말씀해 주세요.</span>
+            `;
+        }
+
+        function error(err) {
+            status.className = "error";
+            switch(err.code) {
+                case err.PERMISSION_DENIED:
+                    status.textContent = "위치 정보 권한이 거부되었습니다. 브라우저 설정에서 권한을 허용해 주세요.";
+                    break;
+                case err.POSITION_UNAVAILABLE:
+                    status.textContent = "위치 정보를 사용할 수 없습니다 (GPS 신호 약함).";
+                    break;
+                case err.TIMEOUT:
+                    status.textContent = "위치 정보를 가져오는 시간이 초과되었습니다.";
+                    break;
+                default:
+                    status.textContent = "위치 정보를 가져오는 중 오류가 발생했습니다.";
+                    break;
+            }
+        }
+
+        navigator.geolocation.getCurrentPosition(success, error, options);
+    };
+</script>
+
+</body>
+</html>
