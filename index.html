@@ -26,26 +26,38 @@
             box-shadow: 0 8px 24px rgba(0,0,0,0.12);
             box-sizing: border-box;
         }
-        /* 경찰서 공식 상단 로고 영역 */
+        /* 참수리 마크가 적용된 경찰서 공식 헤더 */
         .police-header {
             background-color: #0b2240; /* 경찰 네이비 */
             color: white;
-            padding: 12px;
+            padding: 15px 12px;
             border-radius: 12px;
-            font-size: 18px;
-            font-weight: bold;
             margin-bottom: 20px;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
+            gap: 12px;
             box-shadow: inset 0 -3px 0 rgba(0,0,0,0.2);
+        }
+        .police-logo {
+            width: 45px;
+            height: auto;
+            object-fit: contain;
+        }
+        .police-title-area {
+            text-align: left;
+        }
+        .police-title {
+            font-size: 20px;
+            font-weight: bold;
+            letter-spacing: -0.5px;
         }
         .police-sub {
             font-size: 11px;
             color: #b0c4de;
             font-weight: normal;
-            margin-top: 2px;
+            margin-top: 3px;
+            letter-spacing: 0px;
         }
         h1 {
             color: #222;
@@ -58,7 +70,7 @@
             font-size: 13px;
             margin-bottom: 25px;
         }
-        /* 버튼 디자인 보강 */
+        /* 버튼 디자인 (요청하신 문구 반영) */
         .btn {
             display: block;
             width: 100%;
@@ -82,7 +94,7 @@
         .btn-112 { background-color: #1a5276; } /* 경찰 블루 */
         .btn-119 { background-color: #cb4335; } /* 소방 레드 */
         
-        /* 위치 정보 영역 가시성 극대화 */
+        /* 위치 정보 영역 */
         #location-box {
             margin-top: 25px;
             padding: 18px;
@@ -121,20 +133,22 @@
 <body>
 
 <div class="container">
-    <!-- 경찰서 공식 헤더 추가 -->
+    <!-- 참수리 마크 및 요청 사항 반영 헤더 영역 -->
     <div class="police-header">
-        <div>
-            🦅 수원장안경찰서
-            <div class="police-sub">JANGAN POLICE STATION • 스마트 안심 안심존</div>
+        <!-- 대한민국 경찰청 공식 로고 주소 연동 -->
+        <img src="https://www.police.go.kr/images/homepage/sub/logo_pol.png" alt="경찰 참수리 마크" class="police-logo">
+        <div class="police-title-area">
+            <div class="police-title">수원장안경찰서</div>
+            <div class="police-sub">SUWON JANGAN POLICE STATION • 스마트 안심 안심존</div>
         </div>
     </div>
 
     <h1>🚨 긴급 신고 서비스</h1>
     <div class="main-desc">버튼을 터치하면 즉시 112 또는 119 다이얼로 연결됩니다.</div>
 
-    <!-- 112 / 119 호출 버튼 -->
-    <a href="tel:112" class="btn btn-112">경찰 (112) 호출</a>
-    <a href="tel:119" class="btn btn-119">소방 (119) 호출</a>
+    <!-- 경찰서 / 소방서 신고 버튼 문구 반영 -->
+    <a href="tel:112" class="btn btn-112">경찰서(112) 신고</a>
+    <a href="tel:119" class="btn btn-119">소방서(119) 신고</a>
 
     <!-- 위치 안내 영역 -->
     <div id="location-box">
@@ -202,5 +216,5 @@
 </script>
 
 </body>
-</html>  
+</html>
 
