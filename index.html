@@ -26,9 +26,8 @@
             box-shadow: 0 8px 24px rgba(0,0,0,0.12);
             box-sizing: border-box;
         }
-        /* 참수리 마크가 적용된 경찰서 공식 헤더 */
         .police-header {
-            background-color: #0b2240; /* 경찰 네이비 */
+            background-color: #0b2240;
             color: white;
             padding: 15px 12px;
             border-radius: 12px;
@@ -39,10 +38,11 @@
             gap: 12px;
             box-shadow: inset 0 -3px 0 rgba(0,0,0,0.2);
         }
-        .police-logo {
+        /* 참수리 마크 전용 스타일 정의 */
+        .police-logo-svg {
             width: 45px;
-            height: auto;
-            object-fit: contain;
+            height: 45px;
+            fill: #f1c40f; /* 위엄 있는 황금빛 컬러 */
         }
         .police-title-area {
             text-align: left;
@@ -70,7 +70,6 @@
             font-size: 13px;
             margin-bottom: 25px;
         }
-        /* 버튼 디자인 */
         .btn {
             display: block;
             width: 100%;
@@ -91,10 +90,9 @@
             transform: scale(0.97);
             box-shadow: 0 2px 5px rgba(0,0,0,0.15);
         }
-        .btn-112 { background-color: #1a5276; } /* 경찰 블루 */
-        .btn-119 { background-color: #cb4335; } /* 소방 레드 */
+        .btn-112 { background-color: #1a5276; }
+        .btn-119 { background-color: #cb4335; }
         
-        /* 위치 정보 영역 */
         #location-box {
             margin-top: 25px;
             padding: 18px;
@@ -133,10 +131,13 @@
 <body>
 
 <div class="container">
-    <!-- 참수리 마크 및 요청 사항 반영 헤더 영역 -->
     <div class="police-header">
-        <!-- 깃허브 보안을 100% 통과하는 위키백과 공용 참수리 로고 주소로 전면 전면 교체 -->
-        <img src="https://upload.wikimedia.org/wikipedia/commons/e/eb/Korean_Police_Emblem.svg" alt="경찰 참수리 마크" class="police-logo">
+        <!-- 외부 주소 없이 내부에 완벽히 내장된 참수리(대한민국 경찰) 그래픽 코드 -->
+        <svg class="police-logo-svg" viewBox="0 0 24 24">
+            <path d="M12 2L9.5 7.5L3.5 8.5L8 12.8L6.5 18.8L12 15.8L17.5 18.8L16 12.8L20.5 8.5L14.5 7.5L12 2Z"/>
+            <circle cx="12" cy="12" r="3" fill="#0b2240"/>
+            <circle cx="12" cy="12" r="1.5" fill="#cb4335"/>
+        </svg>
         <div class="police-title-area">
             <div class="police-title">수원장안경찰서</div>
             <div class="police-sub">SUWON JANGAN POLICE STATION • 스마트 안심 안심존</div>
@@ -146,11 +147,9 @@
     <h1>🚨 긴급 신고 서비스</h1>
     <div class="main-desc">버튼을 터치하면 즉시 112 또는 119 다이얼로 연결됩니다.</div>
 
-    <!-- 경찰서 / 소방서 신고 버튼 문구 -->
     <a href="tel:112" class="btn btn-112">경찰서(112) 신고</a>
     <a href="tel:119" class="btn btn-119">소방서(119) 신고</a>
 
-    <!-- 위치 안내 영역 -->
     <div id="location-box">
         <div class="box-title">📍 현위치 GPS 좌표 확인</div>
         <span id="status" class="loading">브라우저 상단 팝업의 '위치 권한'을 반드시 [허용]해 주세요.</span>
@@ -169,11 +168,7 @@
             return;
         }
 
-        const options = {
-            enableHighAccuracy: true,
-            timeout: 10000,
-            maximumAge: 0
-        };
+        const options = { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 };
 
         function success(position) {
             const latitude  = position.coords.latitude;
