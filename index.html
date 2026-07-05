@@ -26,9 +26,10 @@
             box-shadow: 0 8px 24px rgba(0,0,0,0.12);
             box-sizing: border-box;
         }
+        /* [근본적 해결] 배경을 화이트로 변경하여 로고의 하얀 여백 상자를 자연스럽게 소멸시킴 */
         .police-header {
-            background-color: #0b2240;
-            color: white;
+            background-color: #ffffff;
+            color: #0b2240;
             padding: 15px 12px;
             border-radius: 12px;
             margin-bottom: 20px;
@@ -36,11 +37,12 @@
             align-items: center;
             justify-content: center;
             gap: 12px;
-            box-shadow: inset 0 -3px 0 rgba(0,0,0,0.2);
+            border: 2px solid #0b2240;
+            box-shadow: 0 4px 12px rgba(11, 34, 64, 0.08);
         }
-        /* 영문 chamsuri.png 전용 고해상도 스타일 */
+        /* 참수리 마크 크기 및 정렬 최적화 */
         .police-logo {
-            width: 52px;
+            width: 50px;
             height: auto;
             object-fit: contain;
             display: block;
@@ -52,11 +54,12 @@
             font-size: 20px;
             font-weight: bold;
             letter-spacing: -0.5px;
+            color: #0b2240;
         }
         .police-sub {
             font-size: 11px;
-            color: #b0c4de;
-            font-weight: normal;
+            color: #5b7290;
+            font-weight: bold;
             margin-top: 3px;
             letter-spacing: 0px;
         }
@@ -133,7 +136,7 @@
 
 <div class="container">
     <div class="police-header">
-        <!-- 확장자를 .png로 완벽하게 매칭 완료 -->
+        <!-- 유훈님의 실제 chamsuri.png 파일과 다이렉트로 1:1 로컬 연동 -->
         <img src="chamsuri.png" alt="수원장안경찰서 참수리 마크" class="police-logo">
         <div class="police-title-area">
             <div class="police-title">수원장안경찰서</div>
